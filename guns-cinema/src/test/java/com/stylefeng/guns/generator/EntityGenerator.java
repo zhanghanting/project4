@@ -29,7 +29,7 @@ public class EntityGenerator {
 
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
-        gc.setOutputDir("D:\\IdeaProjects\\project4\\guns-rest\\src\\main\\java");//这里写你自己的java目录
+        gc.setOutputDir("D:\\IdeaProjects\\project4\\guns-cinema\\src\\main\\java");//这里写你自己的java目录
         gc.setFileOverride(true);//是否覆盖
         gc.setActiveRecord(true);
         gc.setEnableCache(false);// XML 二级缓存
@@ -64,12 +64,12 @@ public class EntityGenerator {
         // 包配置
         PackageConfig pc = new PackageConfig();
         pc.setParent(null);
-        pc.setEntity("com.stylefeng.guns.rest.persistence.model");
-        pc.setMapper("com.stylefeng.guns.rest.persistence.dao");
-        pc.setXml("com.stylefeng.guns.rest.persistence.dao.mapping");
+        pc.setEntity("com.stylefeng.guns.rest.common.persistence.model");
+        pc.setMapper("com.stylefeng.guns.rest.common.persistence.dao");
+        pc.setXml("com.stylefeng.guns.rest.common.persistence.dao.mapping");
         pc.setService("com.stylefeng.guns.rest.modular.cinema.service");       //本项目没用，生成之后删掉
         pc.setServiceImpl("com.stylefeng.guns.rest.modular.cinema.service.impl");   //本项目没用，生成之后删掉
-        pc.setController("com.stylefeng.guns.rest.modular.cinema.controller");    //本项目没用，生成之后删掉
+        //pc.setController("com.stylefeng.guns.rest.modular.cinema.controller");    //本项目没用，生成之后删掉后删掉
         mpg.setPackageInfo(pc);
 
         // 注入自定义配置，可以在 VM 中使用 cfg.abc 设置的值
