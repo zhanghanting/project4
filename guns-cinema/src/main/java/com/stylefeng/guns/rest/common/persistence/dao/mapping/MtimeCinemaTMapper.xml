@@ -14,5 +14,93 @@
         <result column="cinema_address" property="cinemaAddress" />
         <result column="minimum_price" property="minimumPrice" />
     </resultMap>
+    <!--获取电影院列表信息-->
+    <resultMap id="CinemaVOMap" type="com.stylefeng.guns.rest.common.persistence.model.vo.CinemaVO">
+        <result column="UUID" property="uuid"/>
+        <result column="cinema_name" property="cinemaName"/>
+        <result column="cinema_address" property="address"/>
+        <result column="minimum_price" property="minimumPrice"/>
+    </resultMap>
 
+    <select id="getCinemaVO" resultMap="CinemaVOMap">
+        select UUID,
+               cinema_name,
+               cinema_address,
+               minimum_price
+        from mtime_cinema_t
+        <where>
+            1=1
+            <if test="cinemaQueryVO.brandId!=99">
+                and brand_id = #{cinemaQueryVO.brandId}
+            </if>
+            <if test="cinemaQueryVO.districtId!=99">
+                and area_id = #{cinemaQueryVO.districtId}
+            </if>
+            <if test="cinemaQueryVO.hallType!=99">
+                and concat('#',hall_ids,'#')like concat('%',#{cinemaQueryVO.hallType},"%")
+            </if>
+        </where>
+    </select>
+    <!--获取电影院的详细信息-->
+    <resultMap id="CinemaInfoMap" type="com.stylefeng.guns.rest.common.persistence.model.vo.CinemaInfo">
+        <result column="UUID" property="cinemaId"/>
+        <result column="img_address" property="imgUrl"/>
+        <result column="cinema_name" property="cinemaName"/>
+        <result column="cinema_address" property="cinemaAddress"/>
+        <result column="cinema_phone" property="cinemaPhone"/>
+    </resultMap>
+    <select id="getCinemaInfo" resultMap="CinemaInfoMap">
+        select UUID,
+               img_address,
+               cinema_name,
+               cinema_address,
+               cinema_phone
+        from mtime_cinema_t
+        where UUID = #{cinemaId}
+    </select>
+    <resultMap id="FilmInfoMap" type="com.stylefeng.guns.rest.common.persistence.model.vo.FilmInfo">
+       <result column="film_id" property="filmId"/>
+       <result column="film_name" property="filmName"/>
+       <result column="film_length" property="filmLength"/>
+       <result column="film_type" property="filmType"/>
+       <result column="film_cats" property="filmCats"/>
+       <result column="actors" property="actors"/>
+       <result column="img_address" property="imgAddress"/>
+        <collection property="filmFields" column="film_id"
+                    select="com.stylefeng.guns.rest.common.persistence.dao.MtimeCinemaTMapper.selectFilmFieldsByFilmId"/>
+    </resultMap>
+    <!--获取某个影院的所有影片信息-->
+    <select id="getFilmInfo" resultMap="FilmInfoMap">
+        select mtime_field_t.film_id film_id,
+               mtime_film_t.film_name film_name,
+               film_length,
+               film_type,
+               hallFilm.film_cats film_cats,
+               actors,
+               hallFilm.img_address img_address
+        from mtime_field_t
+        left join mtime_hall_film_info_t hallFilm on mtime_field_t.film_id = hallFilm.film_id
+        left join mtime_film_t on mtime_film_t.film_name = hallFilm.film_name
+        where mtime_field_t.cinema_id = #{cinemaId}
+    </select>
+    <!--获取某个影院的放映场次信息-->
+    <resultMap id="FilmFieldsMap" type="com.stylefeng.guns.rest.common.persistence.model.vo.FilmField">
+        <result column="UUID" property="field"/>
+        <result column="begin_time" property="beginTime"/>
+        <result column="end_time" property="endTime"/>
+        <result column="film_language" property="language"/>
+        <result column="hall_name" property="hallName"/>
+        <result column="price" property="price"/>
+    </resultMap>
+    <select id="selectFilmFieldsByFilmId" resultMap="FilmFieldsMap">
+        select mtime_field_t.UUID UUID,
+               begin_time,
+               end_time,
+               film_language,
+               hall_name,
+               price
+        from mtime_field_t
+        left join mtime_hall_film_info_t on mtime_hall_film_info_t.film_id = mtime_field_t.film_id
+        where mtime_field_t.film_id = #{film_id}
+    </select>
 </mapper>

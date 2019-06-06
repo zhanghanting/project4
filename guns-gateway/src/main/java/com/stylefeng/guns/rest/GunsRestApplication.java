@@ -8,7 +8,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @EnableDubboConfiguration
 public class GunsRestApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(GunsRestApplication.class, args);
+
+    public static void main(String[] args)
+    {
+        try
+        {
+            SpringApplication.run(GunsRestApplication.class, args);
+        }catch(Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 }

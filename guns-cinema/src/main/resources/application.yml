@@ -29,9 +29,9 @@ mybatis-plus:
 spring:
   application:
     name: cinema-service
-    dubbo:
-      server: true
-      registry: zookeeper://localhost:2181
+  dubbo:
+    server: true
+    registry: zookeeper://localhost:2181
     protocol:
       name: dubbo
       port: 20880
