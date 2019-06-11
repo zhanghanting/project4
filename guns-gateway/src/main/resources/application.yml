@@ -28,7 +28,7 @@ mybatis-plus:
 
 spring:
   application:
-    name: cinema-gateway
+    name: gateway
   dubbo:
     registry: zookeeper://localhost:2181
   datasource:

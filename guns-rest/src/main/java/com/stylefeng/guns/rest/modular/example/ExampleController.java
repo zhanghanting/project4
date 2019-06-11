@@ -16,9 +16,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/hello")
 public class ExampleController {
 
-    @RequestMapping("")
+    @RequestMapping("/param")
     public ResponseEntity hello(@RequestBody SimpleObject simpleObject) {
         System.out.println(simpleObject.getUser());
+        return ResponseEntity.ok("请求成功!");
+    }
+    @RequestMapping("/noparam")
+    public ResponseEntity  hello() {
+        System.out.println("aaa");
         return ResponseEntity.ok("请求成功!");
     }
 }

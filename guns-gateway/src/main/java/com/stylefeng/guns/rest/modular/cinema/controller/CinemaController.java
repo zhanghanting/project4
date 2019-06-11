@@ -24,7 +24,6 @@ public class CinemaController
         JsonUtil jsonUtil = cinemaService.getCinemas(cinemaQueryVO);
         return jsonUtil;
     }
-
     @RequestMapping("/getFields")
     public CinemaInfoResponseVO getFields(int cinemaId)
     {

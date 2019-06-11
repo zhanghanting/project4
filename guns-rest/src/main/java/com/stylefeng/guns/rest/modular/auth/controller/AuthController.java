@@ -30,7 +30,6 @@ public class AuthController {
 
     @RequestMapping(value = "${jwt.auth-path}")
     public ResponseEntity<?> createAuthenticationToken(AuthRequest authRequest) {
-
         boolean validate = reqValidator.validate(authRequest);
 
         if (validate) {
